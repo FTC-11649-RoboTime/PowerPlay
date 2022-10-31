@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.teleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -6,8 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp
-public class testOpMode extends LinearOpMode {
-
+public class tankDrive extends LinearOpMode{
     //init motors
     DcMotor frontLeft;
     DcMotor frontRight;
@@ -31,32 +30,26 @@ public class testOpMode extends LinearOpMode {
         while (opModeIsActive()) {
 
             //init movement variables
-            double throttle;
-            double turn;
+            double throttleL;
+            double throttleR;
+            double strafeL;
+            double strafeR;
 
-            double strafe;
+            throttleL = 0.75*gamepad1.left_stick_y;
+            throttleR = 0.75*gamepad1.right_stick_y;
+            strafeL = 0.75*gamepad1.left_stick_x;
+            strafeR = 0.75*gamepad1.right_stick_x;
 
-            //mapping movement variables to controller.
-            throttle = gamepad1.left_stick_y;
-            turn = gamepad1.right_stick_x;
+            //mapping movement variables to controller
+            frontLeft.setPower(throttleL);
+            frontRight.setPower(throttleR);
+            backLeft.setPower(throttleL);
+            backRight.setPower(throttleR);
 
-            strafe = gamepad1.left_stick_x;
-
-            //movement code
-            frontLeft.setPower(throttle);
-            frontRight.setPower(throttle);
-            backLeft.setPower(throttle);
-            backRight.setPower(throttle);
-
-            frontLeft.setPower(-turn);
-            frontRight.setPower(turn);
-            backLeft.setPower(-turn);
-            backRight.setPower(turn);
-
-            frontLeft.setPower(-strafe);
-            frontRight.setPower(-strafe);
-            backLeft.setPower(strafe);
-            backRight.setPower(strafe);
+            frontLeft.setPower(-strafeL);
+            frontRight.setPower(strafeL);
+            backLeft.setPower(strafeL);
+            backRight.setPower(-strafeL);
         }
     }
 }
