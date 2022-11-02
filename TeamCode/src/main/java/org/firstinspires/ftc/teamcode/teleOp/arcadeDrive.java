@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+//designated code as driver controlled
 @TeleOp
 public class arcadeDrive extends LinearOpMode {
     //init drive motors
@@ -77,9 +78,9 @@ public class arcadeDrive extends LinearOpMode {
             lift.setPower(liftPowerUp);
             lift.setPower(liftPowerDown);
 
-
+            //sets position of servo depending on button press. Not toggleable.
             if (grabberPower){
-                grabber.setPosition(0.5);
+                grabber.setPosition(0.75);
             }else{
                 grabber.setPosition(0);
             }
