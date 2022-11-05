@@ -36,6 +36,8 @@ public class tankDrive extends LinearOpMode{
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //on start run code
+        boolean grabberToggle;
+        grabberToggle = false;
         waitForStart();
         while (opModeIsActive()) {
 
@@ -48,7 +50,6 @@ public class tankDrive extends LinearOpMode{
             double liftPowerUp;
             double liftPowerDown;
             boolean grabberPower;
-            boolean grabberToggle;
 
             //mapping movement variables to controller
             throttleL = 0.75*gamepad1.left_stick_y;
@@ -58,7 +59,6 @@ public class tankDrive extends LinearOpMode{
             liftPowerUp = gamepad1.left_trigger;
             liftPowerDown = -1*gamepad1.right_trigger;
             grabberPower = gamepad1.x;
-            grabberToggle = false;
 
             //motor movement
             frontLeft.setPower(throttleL);
@@ -76,17 +76,26 @@ public class tankDrive extends LinearOpMode{
             lift.setPower(liftPowerDown);
 
             //sets position of servo depending on button press. Not toggleable.
-            if (grabberPower && !grabberToggle){
-                grabberToggle = true;
-            }else if (grabberPower && grabberToggle){
-                grabberToggle = false;
+            if (grabberPower) {
+                if (grabberToggle == false) {
+//                    grabber.setPosition(0.15);
+                    grabberToggle = true;
+                    telemetry.addData("Grabber toggle", grabberToggle);
+                }else if (grabberToggle == true) {
+//                    grabber.setPosition(1);
+                    grabberToggle = false;
+                    telemetry.addData("Grabber toggle", grabberToggle);
+                }
             }
 
             if (grabberToggle){
-                grabber.setPosition(0);
+                grabber.setPosition(0.8);
             }else if(!grabberToggle){
-                grabber.setPosition(0.75);
+                grabber.setPosition(0.4);
             }
+            telemetry.addData("Grabber toggle", grabberToggle);
+            telemetry.addData("Grabber button", grabberPower);
+            telemetry.update();
         }
     }
 }

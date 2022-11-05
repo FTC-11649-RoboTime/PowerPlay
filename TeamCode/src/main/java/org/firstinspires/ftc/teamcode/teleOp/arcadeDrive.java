@@ -80,10 +80,13 @@ public class arcadeDrive extends LinearOpMode {
 
             //sets position of servo depending on button press. Not toggleable.
             if (grabberPower){
-                grabber.setPosition(0.75);
+                grabber.setPosition(0.8);
             }else{
-                grabber.setPosition(0);
+                grabber.setPosition(0.4);
             }
+//            grabber.setPosition(gamepad2.left_stick_y);
+//            telemetry.addData("ServoPosition", gamepad2.left_stick_y);
+//            telemetry.update();
         }
     }
 }
