@@ -1,11 +1,17 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @Autonomous
 public class testAuto extends LinearOpMode {
@@ -20,7 +26,9 @@ public class testAuto extends LinearOpMode {
     Servo grabber;
 
     //init gyroscope
-    BNO055IMU imu;
+    BNO055IMU gyro;
+    Orientation angles;
+
     public void runOpMode(){
         //assigning drive motor variables to config names
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
@@ -39,7 +47,14 @@ public class testAuto extends LinearOpMode {
         grabber = hardwareMap.get(Servo.class, "grabber");
 
         //assigning imu variable to config name
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit            = BNO055IMU.AngleUnit.DEGREES;
+        parameters.calibrationDataFile  = "BNO055IMUCalibration.json";
+        parameters.loggingEnabled       = true;
+        parameters.loggingTag           = "IMU";
+        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+        gyro = hardwareMap.get(BNO055IMU.class, "imu");
+        gyro.initialize(parameters);
     }
 
     /*
@@ -73,7 +88,58 @@ public class testAuto extends LinearOpMode {
         frontRight.setPower(-0.5);
         backRight.setPower(0.5);
     }
-    private void gyroturn(int degree){
-
+    private boolean gyroturn(double targetAngle){
+        boolean angleReached = false;
+        while (true) {
+            angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            double currentAngle = angles.thirdAngle;
+            if (angles.firstAngle >= targetAngle - 0.5 && angles.firstAngle <= targetAngle + 0.5) {
+                frontLeft.setPower(0);
+                frontRight.setPower(0);
+                backLeft.setPower(0);
+                backRight.setPower(0);
+                //breaks out of loop once at 90 degrees
+                sleep(500);
+                angleReached = true;
+                return angleReached;
+            } else if (angles.firstAngle >= targetAngle + 0.5) {
+                if (angles.firstAngle <= targetAngle + 10) {
+                    frontLeft.setPower(-0.15);
+                    frontRight.setPower(0.15);
+                    backLeft.setPower(-0.15);
+                    backRight.setPower(0.15);
+                    angleReached = false;
+                } else {
+                    frontLeft.setPower(-0.5);
+                    frontRight.setPower(0.5);
+                    backLeft.setPower(-0.5);
+                    backRight.setPower(0.5);
+                    angleReached = false;
+                }
+            } else if (angles.firstAngle <= targetAngle - 0.5) {
+                if (angles.firstAngle >= targetAngle - 10) {
+                    frontLeft.setPower(0.15);
+                    frontRight.setPower(-0.15);
+                    backLeft.setPower(0.15);
+                    backRight.setPower(-0.15);
+                    angleReached = false;
+                } else {
+                    frontLeft.setPower(0.5);
+                    frontRight.setPower(-0.5);
+                    backLeft.setPower(0.5);
+                    backRight.setPower(-0.5);
+                    angleReached = false;
+                }
+            }
+            if (angleReached == true){
+                return angleReached;
+            }
+        }
+    }
+    private void liftMotor(double power, int ticks){
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift.setTargetPosition(ticks);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(power);
     }
 }
