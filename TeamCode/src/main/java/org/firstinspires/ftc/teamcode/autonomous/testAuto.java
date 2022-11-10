@@ -8,13 +8,20 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+
 @Autonomous
 public class testAuto extends LinearOpMode {
+    //init webcam
+    OpenCvCamera webcam;
     //init drive motors
     DcMotor frontLeft;
     DcMotor frontRight;
@@ -55,6 +62,13 @@ public class testAuto extends LinearOpMode {
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
         gyro = hardwareMap.get(BNO055IMU.class, "imu");
         gyro.initialize(parameters);
+
+        //init OpenCv
+        int cameraMonitorViewId = hardwareMap.appContext
+                            .getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        TeamSleeveDetector detector = new TeamSleeveDetector(telemetry);
+        webcam.setPipeline(detector);
     }
 
     /*
