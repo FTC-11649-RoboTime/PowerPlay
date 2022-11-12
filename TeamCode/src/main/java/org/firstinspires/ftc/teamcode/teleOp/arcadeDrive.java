@@ -32,7 +32,7 @@ public class arcadeDrive extends LinearOpMode {
         //Assigning direction to drivetrain motors
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         backRight.setDirection(DcMotorSimple.Direction.FORWARD);
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //on start run code

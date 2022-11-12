@@ -39,7 +39,7 @@ public class tankDrive extends LinearOpMode{
         boolean grabberToggle;
         grabberToggle = false;
         waitForStart();
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         while (opModeIsActive()) {
 
             //init movement variables
@@ -75,6 +75,11 @@ public class tankDrive extends LinearOpMode{
             //lift movement code
             lift.setPower(liftPowerUp);
             lift.setPower(liftPowerDown);
+
+            //stopping lift if it is at min
+//            if (lift.getCurrentPosition() <= -1){
+//                lift.setPower(0);
+//            }/*else if (lift.getCurrentPosition())*/
 
             //sets position of servo depending on button press. Not toggleable.
             if (grabberPower) {
