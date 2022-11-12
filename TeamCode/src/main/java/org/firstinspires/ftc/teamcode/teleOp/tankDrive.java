@@ -39,6 +39,7 @@ public class tankDrive extends LinearOpMode{
         boolean grabberToggle;
         grabberToggle = false;
         waitForStart();
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         while (opModeIsActive()) {
 
             //init movement variables
@@ -95,6 +96,7 @@ public class tankDrive extends LinearOpMode{
             }
             telemetry.addData("Grabber toggle", grabberToggle);
             telemetry.addData("Grabber button", grabberPower);
+            telemetry.addData("Lift motor ticks", lift.getCurrentPosition());
             telemetry.update();
         }
     }
