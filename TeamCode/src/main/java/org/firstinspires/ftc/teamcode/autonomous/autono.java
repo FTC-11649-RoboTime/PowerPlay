@@ -16,11 +16,11 @@ import org.openftc.easyopencv.OpenCvWebcam;
 @Autonomous
 public class autono extends LinearOpMode {
     OpenCvWebcam webcam;
-    robotClass robot = new robotClass();
     @Override
     public void runOpMode() throws InterruptedException {
         //init robot
-        robot.init(hardwareMap);
+        robotClass robot = new robotClass(this);
+        robot.init();
 
         //refrence TeamShippingElementDector
         int cameraMonitorViewId = hardwareMap.appContext
@@ -48,8 +48,8 @@ public class autono extends LinearOpMode {
         if (opModeIsActive()) {
             //grabber close
             robot.close();
-
-            //raise the cone out of the way
+//
+//            //raise the cone out of the way
             robot.liftMotor(1, 24);
 
             //determining where the tse is

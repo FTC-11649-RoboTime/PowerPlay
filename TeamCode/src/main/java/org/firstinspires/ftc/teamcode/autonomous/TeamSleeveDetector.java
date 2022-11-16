@@ -21,17 +21,18 @@ public class TeamSleeveDetector extends OpenCvPipeline {
     }
     private Location location;
 
+    //Setting the Regions Of Interest/ where the control hub is looking for pixels
     static final Rect TOP_ROI = new Rect(
             new Point(0, 0),
-            new Point(320, 50));
+            new Point(360, 50));
 
     static final Rect MID_ROI = new Rect(
             new Point(0, 50),
-            new Point(320, 80));
+            new Point(360, 100));
 
     static final Rect BOTTOM_ROI = new Rect(
-            new Point(0, 80),
-            new Point(320, 110));
+            new Point(0, 100),
+            new Point(360, 150));
 
     static double percentThreshold = 0.05;
 
@@ -52,8 +53,8 @@ public class TeamSleeveDetector extends OpenCvPipeline {
         Scalar orangeHighHSV = new Scalar(71, 183, 255);
 
         //green
-        Scalar greenLowHSV = new Scalar(40,40,40);
-        Scalar greenHighHSV = new Scalar(70,255,255);
+        Scalar greenLowHSV = new Scalar(11,33,0);
+        Scalar greenHighHSV = new Scalar(184,255,148);
 
         Core.inRange(mat, greenLowHSV, greenHighHSV, mat);
 
@@ -67,22 +68,19 @@ public class TeamSleeveDetector extends OpenCvPipeline {
 
         mid.release();
 
-        telemetry.addData("raw Mid value", (int) Core.sumElems(mid).val[0]);
-        telemetry.addData("Mid percentage", Math.round(midValue * 100) + "%");
-
         boolean tseLeft = leftValue > percentThreshold;
         boolean tseMid = midValue > percentThreshold;
         boolean tseRight = rightValue > percentThreshold;
 
         if (tseLeft){
             location = Location.TOP;
-            telemetry.addData("Location", "Top");
+            telemetry.addData("Location", "Left");
         }else if (tseMid){
             location = Location.MIDDLE;
             telemetry.addData("Location", "Middle");
         }else if (tseRight) {
             location = Location.BOTTOM;
-            telemetry.addData("Location", "Bottom");
+            telemetry.addData("Location", "Right");
         }else{
             location = Location.NOT_FOUND;
             telemetry.addData("Location", "not found");
