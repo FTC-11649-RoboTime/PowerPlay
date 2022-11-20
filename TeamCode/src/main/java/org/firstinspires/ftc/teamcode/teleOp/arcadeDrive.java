@@ -43,7 +43,8 @@ public class arcadeDrive extends LinearOpMode {
             //init controller variables
             double throttle;
             double turn;
-            double strafe;
+            boolean strafeLeft;
+            boolean strafeRight;
 
             double liftPowerUp;
             double liftPowerDown;
@@ -52,7 +53,8 @@ public class arcadeDrive extends LinearOpMode {
             //mapping movement variables to controller.
             throttle = gamepad1.left_stick_y;
             turn = gamepad1.right_stick_x;
-            strafe = gamepad1.left_stick_x;
+            strafeLeft = gamepad1.left_bumper;
+            strafeRight = gamepad1.right_bumper;
 
             liftPowerUp = gamepad1.left_trigger;
             liftPowerDown = -1*gamepad1.right_trigger;
@@ -64,15 +66,10 @@ public class arcadeDrive extends LinearOpMode {
             backLeft.setPower(0.75*throttle);
             backRight.setPower(0.75*throttle);
 
-            frontLeft.setPower(0.5*turn);
-            frontRight.setPower(-0.5*turn);
-            backLeft.setPower(0.5*turn);
-            backRight.setPower(-0.5*turn);
-
-            frontLeft.setPower(-0.75*strafe);
-            frontRight.setPower(0.75*strafe);
-            backLeft.setPower(0.75*strafe);
-            backRight.setPower(-0.75*strafe);
+            frontLeft.setPower(-0.5*turn);
+            frontRight.setPower(0.5*turn);
+            backLeft.setPower(-0.5*turn);
+            backRight.setPower(0.5*turn);
 
             //lift movement code
             lift.setPower(liftPowerUp);
@@ -83,6 +80,18 @@ public class arcadeDrive extends LinearOpMode {
                 grabber.setPosition(0.8);
             }else{
                 grabber.setPosition(0.4);
+            }
+
+            if (strafeLeft) {
+                frontLeft.setPower(0.75);
+                frontRight.setPower(-0.75);
+                backLeft.setPower(-0.75);
+                backRight.setPower(0.75);
+            }else if (strafeRight) {
+                frontLeft.setPower(-0.75);
+                frontRight.setPower(0.75);
+                backLeft.setPower(0.75);
+                backRight.setPower(-0.75);
             }
 //            grabber.setPosition(gamepad2.left_stick_y);
 //            telemetry.addData("ServoPosition", gamepad2.left_stick_y);
