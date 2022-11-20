@@ -48,13 +48,15 @@ public class autono extends LinearOpMode {
 
         if (opModeIsActive()) {
             //grabber close
-            grabber.setPosition(0.8);
+            robot.close();
             telemetry.addLine("closed");
 
+            Thread.sleep(5000);
+
             //raise the cone out of the way
-//            robot.liftMotor(1, 24);
+            robot.liftMotor(1, 24);
 //
-//            sleep(5000);
+//            sleep(/5000);
 
             //determining where the tse is
             switch (detector.getLocation()) {

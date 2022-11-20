@@ -157,6 +157,6 @@ public class robotClass {
         arm.setPosition(0.8);
     }
     public void open() throws InterruptedException {
-        arm.setPosition(0.4);
+        arm.setPosition(-0.4);
     }
 }
