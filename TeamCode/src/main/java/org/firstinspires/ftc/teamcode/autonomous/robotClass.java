@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -16,30 +16,30 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import static java.lang.Thread.sleep;
 
 public class robotClass {
-    private LinearOpMode myOpMode = null;
-    
     public DcMotor frontLeft = null;
     public DcMotor backLeft = null;
     public DcMotor frontRight = null;
     public DcMotor backRight = null;
 
     public DcMotor crane = null;
+    public DcMotor carousel = null;
+    public DcMotor redCarousel = null;
     public Servo arm = null;
 
     public BNO055IMU imu = null;
 
     public Orientation angles;
-    
-    public robotClass (LinearOpMode opmode) {
-        myOpMode = opmode;
+
+    public ModernRoboticsI2cRangeSensor rangeSensorM = null;
+
+    public robotClass() {
     }
-    
-    public void init() throws InterruptedException
-    {
-        frontLeft = myOpMode.hardwareMap.get(DcMotor.class, "frontLeft");
-        frontRight = myOpMode.hardwareMap.get(DcMotor.class, "frontRight");
-        backLeft = myOpMode.hardwareMap.get(DcMotor.class, "backLeft");
-        backRight = myOpMode.hardwareMap.get(DcMotor.class, "backRight");
+
+    public void init(HardwareMap ahsMap) {
+        frontLeft = ahsMap.get(DcMotor.class, "frontLeft");
+        frontRight = ahsMap.get(DcMotor.class, "frontRight");
+        backLeft = ahsMap.get(DcMotor.class, "backLeft");
+        backRight = ahsMap.get(DcMotor.class, "backRight");
 
         //Setting direction of motors.
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -47,10 +47,12 @@ public class robotClass {
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        crane = myOpMode.hardwareMap.get(DcMotor.class, "liftMotor");
-        arm = myOpMode.hardwareMap.get(Servo.class, "grabber");
+        crane = ahsMap.get(DcMotor.class, "crane");
+        arm = ahsMap.get(Servo.class, "arm");
 
         crane.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        rangeSensorM = ahsMap.get(ModernRoboticsI2cRangeSensor.class, "distanceM");
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -58,8 +60,10 @@ public class robotClass {
         parameters.loggingEnabled = true;
         parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-        imu = myOpMode.hardwareMap.get(BNO055IMU.class, "imu");
+        imu = ahsMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
+
+
     }
     public boolean gyroTurning(double targetAngle) throws InterruptedException {
         boolean foundAngle = false;

@@ -23,18 +23,18 @@ public class TeamSleeveDetector extends OpenCvPipeline {
 
     //Setting the Regions Of Interest/ where the control hub is looking for pixels
     static final Rect TOP_ROI = new Rect(
-            new Point(0, 0),
-            new Point(360, 50));
+            new Point(100, 150),
+            new Point(200, 180));
 
     static final Rect MID_ROI = new Rect(
-            new Point(0, 50),
-            new Point(360, 100));
+            new Point(100, 180),
+            new Point(200, 210));
 
     static final Rect BOTTOM_ROI = new Rect(
-            new Point(0, 100),
-            new Point(360, 150));
+            new Point(100, 210),
+            new Point(200, 240));
 
-    static double percentThreshold = 0.05;
+    static double percentThreshold = 0.1;
 
     public TeamSleeveDetector(Telemetry t){
         telemetry = t;
@@ -53,8 +53,8 @@ public class TeamSleeveDetector extends OpenCvPipeline {
         Scalar orangeHighHSV = new Scalar(71, 183, 255);
 
         //green
-        Scalar greenLowHSV = new Scalar(11,33,0);
-        Scalar greenHighHSV = new Scalar(184,255,148);
+        Scalar greenLowHSV = new Scalar(40, 30, 100);
+        Scalar greenHighHSV = new Scalar(255, 255, 130);
 
         Core.inRange(mat, greenLowHSV, greenHighHSV, mat);
 
@@ -62,25 +62,25 @@ public class TeamSleeveDetector extends OpenCvPipeline {
         Mat mid = mat.submat(MID_ROI);
         Mat bottom = mat.submat(BOTTOM_ROI);
 
-        double leftValue = Core.sumElems(top).val[0] / TOP_ROI.area() / 100;
+        double topValue = Core.sumElems(top).val[0] / TOP_ROI.area() / 100;
         double midValue = Core.sumElems(mid).val[0] / MID_ROI.area() / 100;
-        double rightValue = Core.sumElems(bottom).val[0] / BOTTOM_ROI.area() / 100;
+        double bottomValue = Core.sumElems(bottom).val[0] / BOTTOM_ROI.area() / 100;
 
         mid.release();
 
-        boolean tseLeft = leftValue > percentThreshold;
-        boolean tseMid = midValue > percentThreshold;
-        boolean tseRight = rightValue > percentThreshold;
+        boolean tsTop = topValue > percentThreshold;
+        boolean tsMid = midValue > percentThreshold;
+        boolean tsBottom = bottomValue > percentThreshold;
 
-        if (tseLeft){
+        if (tsTop){
             location = Location.TOP;
-            telemetry.addData("Location", "Left");
-        }else if (tseMid){
+            telemetry.addData("Location", "Top");
+        }else if (tsMid){
             location = Location.MIDDLE;
             telemetry.addData("Location", "Middle");
-        }else if (tseRight) {
+        }else if (tsBottom) {
             location = Location.BOTTOM;
-            telemetry.addData("Location", "Right");
+            telemetry.addData("Location", "Bottom");
         }else{
             location = Location.NOT_FOUND;
             telemetry.addData("Location", "not found");

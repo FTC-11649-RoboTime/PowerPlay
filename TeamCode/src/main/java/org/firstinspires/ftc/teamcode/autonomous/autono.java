@@ -2,24 +2,23 @@ package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.autonomous.TeamSleeveDetector;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-//import org.openftc.easyopencv.OpenCvCamera;
-//import org.openftc.easyopencv.OpenCvWebcam;
+import org.openftc.easyopencv.OpenCvWebcam;
 
 @Autonomous
 public class autono extends LinearOpMode {
-
-    OpenCvCamera webcam;
-
+    OpenCvWebcam webcam;
+//    robotClass robot = new robotClass();
     @Override
     public void runOpMode() throws InterruptedException {
         //init robot
-        robotClass robot = new robotClass(this);
-        robot.init();
+//        robot.init(hardwareMap);
 
         //refrence TeamShippingElementDector
         int cameraMonitorViewId = hardwareMap.appContext
@@ -42,55 +41,48 @@ public class autono extends LinearOpMode {
         waitForStart();
 
         //Starting values for varibles
-        String locationToPark = "none";
+        String locationOfTSE = "none";
 
         if (opModeIsActive()) {
             //grabber close
-            robot.close();
+//            robot.close();
 
             //raise the cone out of the way
-                //ticks may be wrong
-            robot.liftMotor(1, 24);
+//            robot.liftMotor(1, 24);
 
-            //determine where to park and save the location of th green band in a varible.
+            //determining where the tse is
             switch (detector.getLocation()) {
                 case TOP:
-                    locationToPark = "top";
+                    locationOfTSE = "top";
                     break;
                 case MIDDLE:
-                    locationToPark = "middle";
+                    locationOfTSE = "middle";
                     break;
                 case BOTTOM:
-                    locationToPark = "bottom";
+                    locationOfTSE = "bottom";
                     break;
                 case NOT_FOUND:
-                    locationToPark = "not Found";
+                    locationOfTSE = "not Found";
                     break;
             }
 
-            //strafe over to corner -5in
 
-            //move forward and line up
-
-            //rotate 90 degrees to
-
-            //moving into position by checking the variable
-            if (locationToPark == "top") {
-
-                telemetry.addLine("top");
-                telemetry.update();
-                sleep(500);
-            } else if (locationToPark == "middle") {
-                telemetry.addLine("Middle");
-                telemetry.update();
-                sleep(500);
-            } else if (locationToPark == "bottom") {
-                telemetry.addLine("bottom");
-                telemetry.update();
-                sleep(300);
-            } else if (locationToPark == "not Found") {
-                //if not found park in substation
-            }
+            //moveing crane to right position
+//            if (locationOfTSE == "top") {
+//
+//                telemetry.addLine("top");
+//                telemetry.update();
+//                sleep(500);
+//            } else if (locationOfTSE == "middle") {
+//                telemetry.addLine("Middle");
+//                telemetry.update();
+//                sleep(500);
+//            } else if (locationOfTSE == "bottom") {
+//                telemetry.addLine("bottom");
+//                telemetry.update();
+//                sleep(300);
+//            } else if (locationOfTSE == "not Found") {
+//            }
         }
         webcam.stopStreaming();
     }
