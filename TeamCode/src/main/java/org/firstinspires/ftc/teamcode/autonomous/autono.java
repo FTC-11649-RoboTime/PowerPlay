@@ -14,11 +14,11 @@ import org.openftc.easyopencv.OpenCvWebcam;
 @Autonomous
 public class autono extends LinearOpMode {
     OpenCvWebcam webcam;
-//    robotClass robot = new robotClass();
+    robotClass robot = new robotClass(this);
     @Override
     public void runOpMode() throws InterruptedException {
         //init robot
-//        robot.init(hardwareMap);
+        robot.init(hardwareMap);
 
         //refrence TeamShippingElementDector
         int cameraMonitorViewId = hardwareMap.appContext
@@ -45,10 +45,13 @@ public class autono extends LinearOpMode {
 
         if (opModeIsActive()) {
             //grabber close
-//            robot.close();
+            robot.arm.setPosition(0.4);
+            telemetry.addLine("closed");
 
             //raise the cone out of the way
-//            robot.liftMotor(1, 24);
+            robot.liftMotor(1, 24);
+
+            sleep(5000);
 
             //determining where the tse is
             switch (detector.getLocation()) {
@@ -68,21 +71,21 @@ public class autono extends LinearOpMode {
 
 
             //moveing crane to right position
-//            if (locationOfTSE == "top") {
-//
-//                telemetry.addLine("top");
-//                telemetry.update();
-//                sleep(500);
-//            } else if (locationOfTSE == "middle") {
-//                telemetry.addLine("Middle");
-//                telemetry.update();
-//                sleep(500);
-//            } else if (locationOfTSE == "bottom") {
-//                telemetry.addLine("bottom");
-//                telemetry.update();
-//                sleep(300);
-//            } else if (locationOfTSE == "not Found") {
-//            }
+            if (locationOfTSE == "top") {
+
+                telemetry.addLine("top");
+                telemetry.update();
+                sleep(500);
+            } else if (locationOfTSE == "middle") {
+                telemetry.addLine("Middle");
+                telemetry.update();
+                sleep(500);
+            } else if (locationOfTSE == "bottom") {
+                telemetry.addLine("bottom");
+                telemetry.update();
+                sleep(300);
+            } else if (locationOfTSE == "not Found") {
+            }
         }
         webcam.stopStreaming();
     }

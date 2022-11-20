@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -16,6 +17,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import static java.lang.Thread.sleep;
 
 public class robotClass {
+    private LinearOpMode myOpMode = null;
+
     public DcMotor frontLeft = null;
     public DcMotor backLeft = null;
     public DcMotor frontRight = null;
@@ -30,9 +33,8 @@ public class robotClass {
 
     public Orientation angles;
 
-    public ModernRoboticsI2cRangeSensor rangeSensorM = null;
-
-    public robotClass() {
+    public robotClass (LinearOpMode opmode) {
+        myOpMode = opmode;
     }
 
     public void init(HardwareMap ahsMap) {
@@ -47,12 +49,10 @@ public class robotClass {
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        crane = ahsMap.get(DcMotor.class, "crane");
-        arm = ahsMap.get(Servo.class, "arm");
+        crane = ahsMap.get(DcMotor.class, "liftMotor");
+        arm = ahsMap.get(Servo.class, "grabber");
 
         crane.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        rangeSensorM = ahsMap.get(ModernRoboticsI2cRangeSensor.class, "distanceM");
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -150,8 +150,8 @@ public class robotClass {
     public void liftMotor(double power, int ticks) throws InterruptedException {
         crane.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         crane.setTargetPosition(ticks);
-        crane.setPower(power);
-        crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        crane.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        crane.setPower(-1 * power);
     }
     public void close() throws InterruptedException {
         arm.setPosition(0.8);
