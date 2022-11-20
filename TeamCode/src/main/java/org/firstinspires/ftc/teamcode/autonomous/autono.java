@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.autonomous.TeamSleeveDetector;
@@ -14,12 +15,14 @@ import org.openftc.easyopencv.OpenCvWebcam;
 @Autonomous
 public class autono extends LinearOpMode {
     OpenCvWebcam webcam;
+    Servo grabber;
     robotClass robot = new robotClass(this);
     @Override
     public void runOpMode() throws InterruptedException {
         //init robot
         robot.init(hardwareMap);
 
+        grabber = hardwareMap.get(Servo.class, "grabber");
         //refrence TeamShippingElementDector
         int cameraMonitorViewId = hardwareMap.appContext
                 .getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -45,13 +48,13 @@ public class autono extends LinearOpMode {
 
         if (opModeIsActive()) {
             //grabber close
-            robot.arm.setPosition(0.4);
+            grabber.setPosition(0.8);
             telemetry.addLine("closed");
 
             //raise the cone out of the way
-            robot.liftMotor(1, 24);
-
-            sleep(5000);
+//            robot.liftMotor(1, 24);
+//
+//            sleep(5000);
 
             //determining where the tse is
             switch (detector.getLocation()) {
