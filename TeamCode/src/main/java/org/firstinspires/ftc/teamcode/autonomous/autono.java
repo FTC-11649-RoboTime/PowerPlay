@@ -51,10 +51,8 @@ public class autono extends LinearOpMode {
             robot.close();
             telemetry.addLine("closed");
 
-            Thread.sleep(5000);
-
             //raise the cone out of the way
-            robot.liftMotor(1, 24);
+            robot.liftMotor(1, 48);
 //
 //            sleep(/5000);
 
