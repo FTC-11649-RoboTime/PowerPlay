@@ -44,10 +44,10 @@ public class robotClass {
         backRight = ahsMap.get(DcMotor.class, "backRight");
 
         //Setting direction of motors.
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
-        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         crane = ahsMap.get(DcMotor.class, "liftMotor");
         arm = ahsMap.get(Servo.class, "grabber");
@@ -82,30 +82,30 @@ public class robotClass {
                 break;
             } else if (angles.firstAngle >= targetAngle + 0.5) {
                 if (angles.firstAngle <= targetAngle + 10) {
-                    frontLeft.setPower(0.2);
-                    frontRight.setPower(-0.2);
-                    backLeft.setPower(0.2);
-                    backRight.setPower(-0.2);
+                    frontLeft.setPower(0.10);
+                    frontRight.setPower(-0.10);
+                    backLeft.setPower(0.10);
+                    backRight.setPower(-0.10);
                     foundAngle = false;
                 } else {
-                    frontLeft.setPower(0.5);
-                    frontRight.setPower(-0.5);
-                    backLeft.setPower(0.5);
-                    backRight.setPower(-0.5);
+                    frontLeft.setPower(0.25);
+                    frontRight.setPower(-0.25);
+                    backLeft.setPower(0.25);
+                    backRight.setPower(-0.25);
                     foundAngle = false;
                 }
             } else if (angles.firstAngle <= targetAngle - 0.5) {
                 if (angles.firstAngle >= targetAngle - 10) {
-                    frontLeft.setPower(-0.2);
-                    frontRight.setPower(0.2);
-                    backLeft.setPower(-0.2);
-                    backRight.setPower(0.2);
+                    frontLeft.setPower(-0.10);
+                    frontRight.setPower(0.10);
+                    backLeft.setPower(-0.10);
+                    backRight.setPower(0.10);
                     foundAngle = false;
                 } else {
-                    frontLeft.setPower(-0.5);
-                    frontRight.setPower(0.5);
-                    backLeft.setPower(-0.5);
-                    backRight.setPower(0.5);
+                    frontLeft.setPower(-0.25);
+                    frontRight.setPower(0.25);
+                    backLeft.setPower(-0.25);
+                    backRight.setPower(0.25);
                     foundAngle = false;
                 }
             }
@@ -120,28 +120,28 @@ public class robotClass {
     }
 
     public void move(double power, int time) throws InterruptedException {
-        frontLeft.setPower(power);
-        frontRight.setPower(power);
-        backLeft.setPower(power);
-        backRight.setPower(power);
-        sleep(time);
-        stopMotors();
-    }
-
-    public void strafeLeft(double power, int time) throws InterruptedException {
         frontLeft.setPower(-power);
-        frontRight.setPower(power);
-        backLeft.setPower(power);
+        frontRight.setPower(-power);
+        backLeft.setPower(-power);
         backRight.setPower(-power);
         sleep(time);
         stopMotors();
     }
 
-    public void strafeRight(double power, int time) throws InterruptedException {
+    public void strafeLeft(double power, int time) throws InterruptedException {
         frontLeft.setPower(power);
         frontRight.setPower(-power);
         backLeft.setPower(-power);
         backRight.setPower(power);
+        sleep(time);
+        stopMotors();
+    }
+
+    public void strafeRight(double power, int time) throws InterruptedException {
+        frontLeft.setPower(-power);
+        frontRight.setPower(power);
+        backLeft.setPower(power);
+        backRight.setPower(-power);
         sleep(time);
         stopMotors();
     }
