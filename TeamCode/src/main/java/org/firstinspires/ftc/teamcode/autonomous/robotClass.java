@@ -71,7 +71,7 @@ public class robotClass {
         while (foundAngle == false) {
             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             double currentAngle = angles.firstAngle;
-
+            myOpMode.telemetry.addData("angle", angles.firstAngle);
             if (angles.firstAngle >= targetAngle - 0.1 && angles.firstAngle <= targetAngle + 0.1) {
                 frontLeft.setPower(0);
                 frontRight.setPower(0);
