@@ -53,6 +53,7 @@ public class robotClass {
         arm = ahsMap.get(Servo.class, "grabber");
 
         crane.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        crane.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -68,45 +69,41 @@ public class robotClass {
     public boolean gyroTurning(double targetAngle) throws InterruptedException {
         boolean foundAngle = false;
         //while (opModeIsActive()) {
-        while (foundAngle == false) {
+        while (true) {
             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-            double currentAngle = angles.firstAngle;
-            myOpMode.telemetry.addData("angle", angles.firstAngle);
-            if (angles.firstAngle >= targetAngle - 0.1 && angles.firstAngle <= targetAngle + 0.1) {
+            double currentAngle = angles.thirdAngle;
+            if (angles.firstAngle >= targetAngle - 0.5 && angles.firstAngle <= targetAngle + 0.5) {
                 frontLeft.setPower(0);
                 frontRight.setPower(0);
                 backLeft.setPower(0);
                 backRight.setPower(0);
-                foundAngle = true;
-                sleep(1000);
+                //breaks out of loop once at 90 degrees
                 break;
             } else if (angles.firstAngle >= targetAngle + 0.5) {
                 if (angles.firstAngle <= targetAngle + 10) {
-                    frontLeft.setPower(0.10);
-                    frontRight.setPower(-0.10);
-                    backLeft.setPower(0.10);
-                    backRight.setPower(-0.10);
-                    foundAngle = false;
+                    frontLeft.setPower(-0.15);
+                    frontRight.setPower(0.15);
+                    backLeft.setPower(-0.15);
+                    backRight.setPower(0.15);
+                    break;
                 } else {
-                    frontLeft.setPower(0.25);
-                    frontRight.setPower(-0.25);
-                    backLeft.setPower(0.25);
-                    backRight.setPower(-0.25);
-                    foundAngle = false;
+                    frontLeft.setPower(-0.5);
+                    frontRight.setPower(0.5);
+                    backLeft.setPower(-0.5);
+                    backRight.setPower(0.5);
                 }
             } else if (angles.firstAngle <= targetAngle - 0.5) {
                 if (angles.firstAngle >= targetAngle - 10) {
-                    frontLeft.setPower(-0.10);
-                    frontRight.setPower(0.10);
-                    backLeft.setPower(-0.10);
-                    backRight.setPower(0.10);
-                    foundAngle = false;
+                    frontLeft.setPower(0.15);
+                    frontRight.setPower(-0.15);
+                    backLeft.setPower(0.15);
+                    backRight.setPower(-0.15);
+                    break;
                 } else {
-                    frontLeft.setPower(-0.25);
-                    frontRight.setPower(0.25);
-                    backLeft.setPower(-0.25);
-                    backRight.setPower(0.25);
-                    foundAngle = false;
+                    frontLeft.setPower(0.5);
+                    frontRight.setPower(-0.5);
+                    backLeft.setPower(0.5);
+                    backRight.setPower(-0.5);
                 }
             }
         }
@@ -148,10 +145,15 @@ public class robotClass {
 
     //Other methods
     public void liftMotor(double power, int ticks) throws InterruptedException {
-        crane.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         crane.setTargetPosition(ticks);
-        crane.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         crane.setPower(-1 * power);
+        while (crane.isBusy()){
+            myOpMode.telemetry.addData("lift is busy", crane.isBusy());
+            myOpMode.telemetry.addData("lift position", crane.getCurrentPosition());
+        }
+        crane.setPower(0);
+        crane.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public void close() throws InterruptedException {
         arm.setPosition(0.8);

@@ -48,13 +48,13 @@ public class autono extends LinearOpMode {
 
         if (opModeIsActive()) {
             //grabber close
-//            robot.close();
-//            telemetry.addLine("closed");
+            robot.close();
+            telemetry.addLine("closed");
 //
-//            Thread.sleep(500);
+            Thread.sleep(500);
 //
 //            //raise the cone out of the way
-//            robot.liftMotor(1, 48);
+            robot.liftMotor(1, -24);
 
             //determining where the tse is
             switch (detector.getLocation()) {
@@ -71,19 +71,18 @@ public class autono extends LinearOpMode {
                     locationOfTSE = "not Found";
                     break;
             }
-//
-//            robot.crane.setPower(0);
-//
+
 //            //strafe right
 //            robot.strafeRight(0.5, 1200);
-//
-//            //move forward
+////
+////            //move forward
 //            robot.move(0.75, 500);
-//
+////
 //            Thread.sleep(500);
-//
+////
 //            robot.strafeLeft(0.5, 250);
-            robot.gyroTurning(90);
+//            Thread.sleep(500);
+//            robot.gyroTurning(90);
 
             //moveing crane to right position
             if (locationOfTSE == "top") {
