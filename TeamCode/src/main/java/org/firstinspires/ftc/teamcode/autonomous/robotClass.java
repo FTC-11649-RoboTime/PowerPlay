@@ -69,14 +69,18 @@ public class robotClass {
     public boolean gyroTurning(double targetAngle) throws InterruptedException {
         boolean foundAngle = false;
         //while (opModeIsActive()) {
-        while (true) {
+        while (foundAngle==false) {
             angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             double currentAngle = angles.thirdAngle;
+            myOpMode.telemetry.addData("angle", angles.firstAngle);
             if (angles.firstAngle >= targetAngle - 0.5 && angles.firstAngle <= targetAngle + 0.5) {
                 frontLeft.setPower(0);
                 frontRight.setPower(0);
                 backLeft.setPower(0);
                 backRight.setPower(0);
+
+                foundAngle=true;
+                sleep(1000);
                 //breaks out of loop once at 90 degrees
                 break;
             } else if (angles.firstAngle >= targetAngle + 0.5) {
@@ -118,8 +122,9 @@ public class robotClass {
 
     public void move(double power, int time) throws InterruptedException {
         frontLeft.setPower(-power);
-        frontRight.setPower(-power);
         backLeft.setPower(-power);
+//        sleep(100);
+        frontRight.setPower(-power);
         backRight.setPower(-power);
         sleep(time);
         stopMotors();
@@ -148,15 +153,9 @@ public class robotClass {
         crane.setTargetPosition(ticks);
         crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         crane.setPower(-1 * power);
-        while (crane.isBusy()){
-            myOpMode.telemetry.addData("lift is busy", crane.isBusy());
-            myOpMode.telemetry.addData("lift position", crane.getCurrentPosition());
-        }
-        crane.setPower(0);
-        crane.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public void close() throws InterruptedException {
-        arm.setPosition(0.8);
+        arm.setPosition(1);
     }
     public void open() throws InterruptedException {
         arm.setPosition(-0.4);

@@ -51,10 +51,10 @@ public class autono extends LinearOpMode {
             robot.close();
             telemetry.addLine("closed");
 //
-            Thread.sleep(500);
+            Thread.sleep(1000);
 //
 //            //raise the cone out of the way
-            robot.liftMotor(1, -24);
+            robot.liftMotor(1, -1900);
 
             //determining where the tse is
             switch (detector.getLocation()) {
@@ -72,17 +72,22 @@ public class autono extends LinearOpMode {
                     break;
             }
 
-//            //strafe right
-//            robot.strafeRight(0.5, 1200);
-////
-////            //move forward
-//            robot.move(0.75, 500);
-////
-//            Thread.sleep(500);
-////
+            //strafe right
+            robot.strafeRight(0.5, 1250);
+
+            Thread.sleep(1000);
+            //move forward
+            robot.move(0.75, 550);
+
+            Thread.sleep(500);
+
 //            robot.strafeLeft(0.5, 250);
-//            Thread.sleep(500);
-//            robot.gyroTurning(90);
+            Thread.sleep(500);
+            robot.gyroTurning(55);
+
+            Thread.sleep(1000);
+//            robot.strafeRight(0.5, 400);
+//            robot.move(0.1, 300);
 
             //moveing crane to right position
             if (locationOfTSE == "top") {
