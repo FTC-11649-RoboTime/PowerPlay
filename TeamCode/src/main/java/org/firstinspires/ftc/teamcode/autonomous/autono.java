@@ -41,21 +41,21 @@ public class autono extends LinearOpMode {
             }
         });
 
+        //grabber close
+//        robot.close();
+        telemetry.addLine("closed");
+//
+        Thread.sleep(1000);
+//
+//            //raise the cone out of the way
+        robot.liftMotor(1, -1900);
+
         waitForStart();
 
         //Starting values for varibles
         String locationOfTSE = "none";
 
         if (opModeIsActive()) {
-            //grabber close
-            robot.close();
-            telemetry.addLine("closed");
-//
-            Thread.sleep(1000);
-//
-//            //raise the cone out of the way
-            robot.liftMotor(1, -1900);
-
             //determining where the tse is
             switch (detector.getLocation()) {
                 case TOP:
@@ -73,11 +73,11 @@ public class autono extends LinearOpMode {
             }
 
             //strafe right
-            robot.strafeRight(0.5, 1250);
+            robot.strafeRight(0.5, 1400);
 
             Thread.sleep(1000);
             //move forward
-            robot.move(0.75, 550);
+            robot.move(0.75, 500);
 
             Thread.sleep(500);
 
@@ -86,24 +86,35 @@ public class autono extends LinearOpMode {
             robot.gyroTurning(55);
 
             Thread.sleep(1000);
-//            robot.strafeRight(0.5, 400);
-//            robot.move(0.1, 300);
 
-            //moveing crane to right position
+            robot.stopMotors();
+            Thread.sleep(1000);
+
+            //parking
+            robot.strafeRight(0.5, 700);
+
             if (locationOfTSE == "top") {
 
                 telemetry.addLine("top");
                 telemetry.update();
                 sleep(500);
+
+                robot.move(0.75, 1500);
             } else if (locationOfTSE == "middle") {
                 telemetry.addLine("Middle");
                 telemetry.update();
                 sleep(500);
+
+                robot.move(0.5, 1500);
             } else if (locationOfTSE == "bottom") {
                 telemetry.addLine("bottom");
                 telemetry.update();
                 sleep(300);
+
+                robot.move(0.3, 1500);
             } else if (locationOfTSE == "not Found") {
+                robot.move(0.5, 1500);
+
             }
         }
         webcam.stopStreaming();

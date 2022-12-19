@@ -82,6 +82,8 @@ public class robotClass {
                 foundAngle=true;
                 sleep(1000);
                 //breaks out of loop once at 90 degrees
+                myOpMode.telemetry.addData("angle", angles.firstAngle);
+
                 break;
             } else if (angles.firstAngle >= targetAngle + 0.5) {
                 if (angles.firstAngle <= targetAngle + 10) {

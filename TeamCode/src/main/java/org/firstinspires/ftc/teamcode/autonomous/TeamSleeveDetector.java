@@ -23,16 +23,16 @@ public class TeamSleeveDetector extends OpenCvPipeline {
 
     //Setting the Regions Of Interest/ where the control hub is looking for pixels
     static final Rect TOP_ROI = new Rect(
-            new Point(100, 150),
-            new Point(200, 190));
+            new Point(200, 160),
+            new Point(250, 180));
 
     static final Rect MID_ROI = new Rect(
-            new Point(100, 190),
-            new Point(200, 220));
+            new Point(200, 180),
+            new Point(250, 200));
 
     static final Rect BOTTOM_ROI = new Rect(
-            new Point(100, 200),
-            new Point(200, 240));
+            new Point(200, 200),
+            new Point(250, 220));
 
     static double percentThreshold = 0.1;
 
