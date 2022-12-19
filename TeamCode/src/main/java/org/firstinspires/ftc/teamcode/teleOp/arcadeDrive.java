@@ -67,7 +67,7 @@ public class arcadeDrive extends LinearOpMode {
             backRight.setPower(0.75*throttle);
 
             frontLeft.setPower(-0.5*turn);
-            frontRight.setPower(0.5*turn);
+            frontRight.setPower(0.5*turn);//tobey is the best
             backLeft.setPower(-0.5*turn);
             backRight.setPower(0.5*turn);
 
@@ -82,7 +82,7 @@ public class arcadeDrive extends LinearOpMode {
 
             //sets position of servo depending on button press. Not toggleable.
             if (grabberPower){
-                grabber.setPosition(0.8);
+                grabber.setPosition(1);
             }else{
                 grabber.setPosition(0.4);
             }
