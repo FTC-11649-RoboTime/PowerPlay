@@ -2,18 +2,16 @@ package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.autonomous.TeamSleeveDetector;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
 
-@Autonomous
-public class autono extends LinearOpMode {
+@Autonomous (name="Left Side Autonomous")
+public class leftSide extends LinearOpMode {
     OpenCvWebcam webcam;
     Servo grabber;
     robotClass robot = new robotClass(this);
@@ -42,7 +40,7 @@ public class autono extends LinearOpMode {
         });
 
         //grabber close
-//        robot.close();
+        robot.close();
         telemetry.addLine("closed");
 //
         Thread.sleep(1000);
@@ -73,19 +71,21 @@ public class autono extends LinearOpMode {
             }
 
             //strafe right
-            robot.strafeRight(0.5, 1400);
+            robot.strafeRight(0.5, 1200);
 
             Thread.sleep(1000);
             //move forward
-            robot.move(0.75, 500);
+            robot.move(0.75, 450);
 
             Thread.sleep(500);
 
 //            robot.strafeLeft(0.5, 250);
             Thread.sleep(500);
             robot.gyroTurning(55);
-
             Thread.sleep(1000);
+
+            robot.move(0.25, 150);
+            robot.open();
 
             robot.stopMotors();
             Thread.sleep(1000);
@@ -99,19 +99,19 @@ public class autono extends LinearOpMode {
                 telemetry.update();
                 sleep(500);
 
-                robot.move(0.75, 1500);
+                robot.move(0.5, 1500);
             } else if (locationOfTSE == "middle") {
                 telemetry.addLine("Middle");
                 telemetry.update();
                 sleep(500);
 
-                robot.move(0.5, 1500);
+                robot.move(0.3, 1500);
             } else if (locationOfTSE == "bottom") {
                 telemetry.addLine("bottom");
                 telemetry.update();
                 sleep(300);
 
-                robot.move(0.3, 1500);
+//                robot.move(0.3, 1500);
             } else if (locationOfTSE == "not Found") {
                 robot.move(0.5, 1500);
 
