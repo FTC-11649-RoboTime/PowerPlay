@@ -72,11 +72,11 @@ public class rightSide extends LinearOpMode {
             }
 
             //strafe right
-            robot.strafeLeft(0.5, 1200);
+            robot.strafeLeft(0.5, 1000);
 
             Thread.sleep(1000);
             //move forward
-            robot.move(0.8, 80\0);
+            robot.move(0.8, 1000);
 
             Thread.sleep(500);
 
