@@ -56,8 +56,8 @@ public class arcadeDrive extends LinearOpMode {
             strafeLeft = gamepad1.left_bumper;
             strafeRight = gamepad1.right_bumper;
 
-            liftPowerUp = gamepad2.dpad_up;
-            liftPowerDown = gamepad2.dpad_down;
+            liftPowerUp = gamepad2.left_bumper;
+            liftPowerDown = gamepad2.right_bumper;
             grabberPower = gamepad2.x;
 
             //movement code
@@ -72,6 +72,7 @@ public class arcadeDrive extends LinearOpMode {
             backRight.setPower(0.5*turn);
 
             //lift movement code
+
             if (liftPowerUp) {
                 lift.setPower(-0.75);
             }else if (liftPowerDown) {
@@ -79,6 +80,7 @@ public class arcadeDrive extends LinearOpMode {
             }else {
                 lift.setPower(0);
             }
+
 
             //sets position of servo depending on button press. Not toggleable.
             if (grabberPower){
