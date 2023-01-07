@@ -14,16 +14,14 @@ public class robotEncoders extends LinearOpMode {
         waitForStart();
         int target = 24;
 
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        double speed = gamepad1.left_stick_y;
 
         while (opModeIsActive()) {
-            lift.setTargetPosition(target);
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(0.5);
-            while (lift.isBusy()){
-                telemetry.addData("Lift is busy", lift.isBusy());
-            }
-            lift.setPower(0);
+            lift.setPower(speed);
+            telemetry.addData("encoder value", lift.getCurrentPosition());
         }
     }
 }
