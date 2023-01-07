@@ -74,9 +74,9 @@ public class arcadeDrive extends LinearOpMode {
             //lift movement code
 
             if (liftPowerUp) {
-                lift.setPower(-0.75);
-            }else if (liftPowerDown) {
                 lift.setPower(0.75);
+            }else if (liftPowerDown) {
+                lift.setPower(-0.75);
             }else {
                 lift.setPower(0);
             }
