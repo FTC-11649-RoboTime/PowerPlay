@@ -90,7 +90,7 @@ public class tankDrive extends LinearOpMode{
             if (grabberPower){
                 grabber.setPosition(1);
             }else{
-                grabber.setPosition(0.4);
+                grabber.setPosition(0);
             }
             telemetry.addData("Grabber toggle", grabberToggle);
             telemetry.addData("Grabber button", grabberPower);
