@@ -10,7 +10,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
 
-@Autonomous (name="Right Side Autonomous")
+@Autonomous (name="Left Side Autonomous")
 public class rightSide extends LinearOpMode {
     OpenCvWebcam webcam;
     Servo grabber;
@@ -72,11 +72,11 @@ public class rightSide extends LinearOpMode {
             }
 
             //strafe right
-            robot.strafeLeft(0.5, 1000);
+            robot.strafeLeft(0.5, 1500);
 
             Thread.sleep(1000);
             //move forward
-            robot.move(0.8, 1000);
+            robot.move(0.8, 750);
 
             Thread.sleep(500);
 
@@ -86,6 +86,7 @@ public class rightSide extends LinearOpMode {
             Thread.sleep(1000);
 
             robot.move(0.25, 150);
+            robot.liftMotor(1, -1800);
             robot.open();
 
             robot.stopMotors();
@@ -117,6 +118,7 @@ public class rightSide extends LinearOpMode {
                 robot.move(0.5, 1500);
 
             }
+            robot.liftMotor(1, 0);
         }
         webcam.stopStreaming();
     }

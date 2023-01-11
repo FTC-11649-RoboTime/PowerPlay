@@ -27,6 +27,8 @@ public class tankDrive extends LinearOpMode{
 
         //assigning config values to lift variables
         lift = hardwareMap.get(DcMotor.class, "liftMotor");
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         grabber = hardwareMap.get(Servo.class, "grabber");
 
         //assigning directions to drive motors
@@ -57,8 +59,8 @@ public class tankDrive extends LinearOpMode{
             throttleR = 0.75*gamepad1.right_stick_y;
             strafeL = 0.75*gamepad1.left_stick_x;
 
-            liftPowerUp = gamepad2.left_bumper;
-            liftPowerDown = gamepad2.right_bumper;
+            liftPowerUp = gamepad2.right_bumper;
+            liftPowerDown = gamepad2.left_bumper;
             grabberPower = gamepad2.x;
 
             //motor movement
@@ -74,7 +76,11 @@ public class tankDrive extends LinearOpMode{
 
             //lift movement code
             if (liftPowerUp) {
-                lift.setPower(1);
+                if (lift.getCurrentPosition() >= 0){
+                    lift.setPower(0);
+                } else {
+                    lift.setPower(1);
+                }
             }else if (liftPowerDown) {
                 lift.setPower(-1);
             }else {

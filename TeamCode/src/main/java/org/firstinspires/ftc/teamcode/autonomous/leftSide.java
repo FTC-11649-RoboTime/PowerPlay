@@ -10,7 +10,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
 
-@Autonomous (name="Left Side Autonomous")
+@Autonomous (name="Right Side Autonomous")
 public class leftSide extends LinearOpMode {
     OpenCvWebcam webcam;
     Servo grabber;
