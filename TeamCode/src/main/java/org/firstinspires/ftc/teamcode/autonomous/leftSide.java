@@ -75,38 +75,43 @@ public class leftSide extends LinearOpMode {
 
             Thread.sleep(1000);
             //move forward
-            robot.move(0.75, 450);
+            robot.move(0.75, 400);
 
             Thread.sleep(500);
 
 //            robot.strafeLeft(0.5, 250);
             Thread.sleep(500);
-            robot.gyroTurning(55);
+            robot.gyroTurning(50);
             Thread.sleep(1000);
 
-            robot.move(0.25, 150);
+            robot.move(0.2, 200);
+            robot.liftMotor(1, -1500);
+            Thread.sleep(500);
             robot.open();
 
             robot.stopMotors();
             Thread.sleep(1000);
 
             //parking
-            robot.strafeRight(0.5, 700);
 
             if (locationOfTSE == "top") {
-
+                robot.strafeRight(0.5, 600);
+//                robot.gyroTurning(0);
                 telemetry.addLine("top");
                 telemetry.update();
                 sleep(500);
 
                 robot.move(0.5, 1500);
             } else if (locationOfTSE == "middle") {
+                robot.strafeRight(0.5, 600);
+//                robot.gyroTurning(0);
                 telemetry.addLine("Middle");
                 telemetry.update();
                 sleep(500);
 
                 robot.move(0.3, 1500);
             } else if (locationOfTSE == "bottom") {
+
                 telemetry.addLine("bottom");
                 telemetry.update();
                 sleep(300);

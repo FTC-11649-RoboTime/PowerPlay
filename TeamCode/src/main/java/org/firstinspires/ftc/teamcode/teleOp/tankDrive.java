@@ -27,8 +27,6 @@ public class tankDrive extends LinearOpMode{
 
         //assigning config values to lift variables
         lift = hardwareMap.get(DcMotor.class, "liftMotor");
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         grabber = hardwareMap.get(Servo.class, "grabber");
 
         //assigning directions to drive motors
@@ -97,6 +95,11 @@ public class tankDrive extends LinearOpMode{
                 grabber.setPosition(1);
             }else{
                 grabber.setPosition(0);
+            }
+
+            if (gamepad2.a) {
+                lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             }
             telemetry.addData("Grabber toggle", grabberToggle);
             telemetry.addData("Grabber button", grabberPower);
