@@ -15,6 +15,12 @@ public class leftSide extends LinearOpMode {
     OpenCvWebcam webcam;
     Servo grabber;
     robotClass robot = new robotClass(this);
+
+    //flags
+    boolean runOpenCVDetection = true;
+    boolean park = true;
+    boolean dropCone = true;
+
     @Override
     public void runOpMode() throws InterruptedException {
         //init robot
@@ -39,14 +45,7 @@ public class leftSide extends LinearOpMode {
             }
         });
 
-        //grabber close
-        robot.close();
-        telemetry.addLine("closed");
-//
-        Thread.sleep(1000);
-//
-//            //raise the cone out of the way
-        robot.liftMotor(1, -1900);
+
 
         waitForStart();
 
@@ -54,6 +53,17 @@ public class leftSide extends LinearOpMode {
         String locationOfTSE = "none";
 
         if (opModeIsActive()) {
+            //grabber close
+            robot.close();
+            telemetry.addLine("closed");
+//
+            Thread.sleep(1000);
+//
+//            //raise the cone out of the way
+            robot.liftMotor(1, -1900);
+
+            Thread.sleep(5000);
+
             //determining where the tse is
             switch (detector.getLocation()) {
                 case TOP:
@@ -75,7 +85,7 @@ public class leftSide extends LinearOpMode {
 
             Thread.sleep(1000);
             //move forward
-            robot.move(0.75, 400);
+            robot.move(0.75, 450);
 
             Thread.sleep(500);
 

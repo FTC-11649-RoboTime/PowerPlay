@@ -27,6 +27,8 @@ public class tankDrive extends LinearOpMode{
 
         //assigning config values to lift variables
         lift = hardwareMap.get(DcMotor.class, "liftMotor");
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         grabber = hardwareMap.get(Servo.class, "grabber");
 
         //assigning directions to drive motors

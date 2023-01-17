@@ -72,15 +72,15 @@ public class TeamSleeveDetector extends OpenCvPipeline {
         boolean tsMid = midValue > percentThreshold;
         boolean tsBottom = bottomValue > percentThreshold;
 
-        if (tsTop){
-            location = Location.TOP;
-            telemetry.addData("Location", "Top");
-        }else if (tsMid){
-            location = Location.MIDDLE;
-            telemetry.addData("Location", "Middle");
-        }else if (tsBottom) {
+        if (tsBottom) {
             location = Location.BOTTOM;
             telemetry.addData("Location", "Bottom");
+        }else if (tsMid) {
+            location = Location.TOP;
+            telemetry.addData("Location", "Middle");
+        }else if (tsTop){
+            location = Location.MIDDLE;
+            telemetry.addData("Location", "Top");
         }else{
             location = Location.NOT_FOUND;
             telemetry.addData("Location", "not found");

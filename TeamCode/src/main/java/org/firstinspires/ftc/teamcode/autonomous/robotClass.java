@@ -17,6 +17,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import static java.lang.Thread.sleep;
 
 public class robotClass {
+
+/*
+INITIALIZATION CODE
+ */
     private LinearOpMode myOpMode = null;
 
     public DcMotor frontLeft = null;
@@ -55,6 +59,7 @@ public class robotClass {
         crane.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         crane.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        //gyroscope init
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
@@ -66,6 +71,11 @@ public class robotClass {
 
 
     }
+
+/*
+    MOVEMENT CODE
+        No encoders are being used.
+ */
     public boolean gyroTurning(double targetAngle) throws InterruptedException {
         boolean foundAngle = false;
         //while (opModeIsActive()) {
@@ -125,7 +135,6 @@ public class robotClass {
     public void move(double power, int time) throws InterruptedException {
         frontLeft.setPower(-power);
         backLeft.setPower(-power);
-//        sleep(100);
         frontRight.setPower(-power);
         backRight.setPower(-power);
         sleep(time);
