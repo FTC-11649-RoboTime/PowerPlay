@@ -27,7 +27,6 @@ INITIALIZATION CODE
     public DcMotor backLeft = null;
     public DcMotor frontRight = null;
     public DcMotor backRight = null;
-
     public DcMotor crane = null;
     public DcMotor carousel = null;
     public DcMotor redCarousel = null;
